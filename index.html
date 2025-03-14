@@ -103,7 +103,7 @@
             gap: 10px;
         }
         .progress-container span {
-            color: #1475e1;
+            color: #ffffff;
             font-size: 16px;
         }
         .copy-icon {
@@ -116,7 +116,7 @@
         }
         /* Estilos do rodapé */
         footer {
-            position: absolute ; /* Posiciona o rodapé de forma absoluta */
+            position: absolute; /* Posiciona o rodapé de forma absoluta */
             bottom: 20px; /* Distância da parte inferior da página */
             left: 50%; /* Centraliza horizontalmente */
             transform: translateX(-50%); /* Ajusta a centralização */
@@ -218,52 +218,52 @@
             { nome: "Diamante V", valor: 3000000000 },
             { nome: "Obsidian", valor: 6000000000 } // Mantido para cálculo, mas não aparece no <select>
         ];
-
+    
         function calc() {
             const progress = parseFloat(document.getElementById("progress").value);
             const level = parseFloat(document.getElementById("level").value);
-
+    
             // Validar entrada de progresso
             if (isNaN(progress)) {
                 alert("Por favor, insira um valor numérico para o progresso.");
                 return;
             }
-
+    
             if (progress < 0 || progress > 99.99) {
                 alert("O progresso deve estar entre 0 e 99.99.");
                 return;
             }
-
+    
             // Encontrar o índice do nível atual
             const levelIndex = levels.findIndex(l => l.valor === level);
             if (levelIndex === -1) {
                 alert("Nível inválido selecionado.");
                 return;
             }
-
+    
             // Pegar o próximo nível
             const nextLevel = levels[levelIndex + 1];
-
+    
             // Verificar se há um próximo nível
             if (!nextLevel) {
                 document.getElementById("result").innerHTML = "Não há próximo nível disponível.";
                 return;
             }
-
+    
             // Calcular o valor total necessário para o próximo nível
             const totalNeeded = nextLevel.valor - level;
-
+    
             // Calcular o valor já alcançado com base no progresso
             const amountAchieved = (progress / 100) * totalNeeded;
-
+    
             // Calcular o valor restante
             const remainingAmount = totalNeeded - amountAchieved;
-
+    
             // Dividir o valor restante por 3
             const dividedAmount = remainingAmount / 3;
-
+    
             // Exibir o resultado
-            const resultText = `Será necessário R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino ou R$ ${dividedAmount.toLocaleString('pt-BR')} em apostas esportivas para alcançar o próximo nível (${nextLevel.nome}).`;
+            const resultText = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).<br><br>Lembrando que apostas esportivas o progresso é 3 vezes mais rápido.`;
             document.getElementById("result").innerHTML = `
                 ${resultText}
                 <span class="copy-icon" title="Copiar resultado" aria-label="Copiar resultado">
@@ -272,7 +272,7 @@
                     </svg>
                 </span>
             `;
-
+    
             // Adicionar evento de cópia ao ícone
             const copyIcon = document.querySelector(".copy-icon");
             copyIcon.addEventListener("click", function () {
@@ -281,7 +281,18 @@
                 });
             });
         }
-
+    
+        // Função para limpar o resultado
+        function clearResult() {
+            document.getElementById("result").innerHTML = "";
+        }
+    
+        // Adicionar evento de alteração ao campo de nível
+        document.getElementById("level").addEventListener("change", clearResult);
+    
+        // Adicionar evento de alteração ao campo de progresso
+        document.getElementById("progress").addEventListener("input", clearResult);
+    
         // Adicionar evento de tecla ao campo de progresso
         document.getElementById("progress").addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
