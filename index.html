@@ -30,7 +30,7 @@
         }
         .container {
             margin-top: 150px; /* Ajuste para acomodar a logo */
-            width: 400px; /* Largura fixa do container */
+            width: 500px; /* Largura fixa do container */
             padding: 20px;
             background-color: #122431;
             border-radius: 8px;
@@ -70,7 +70,7 @@
         }
         select {
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231475e1%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
             background-position: right 10px center;
             background-size: 12px;
@@ -218,81 +218,85 @@
             { nome: "Diamante V", valor: 3000000000 },
             { nome: "Obsidian", valor: 6000000000 } // Mantido para cálculo, mas não aparece no <select>
         ];
-    
+
         function calc() {
             const progress = parseFloat(document.getElementById("progress").value);
             const level = parseFloat(document.getElementById("level").value);
-    
+
             // Validar entrada de progresso
             if (isNaN(progress)) {
                 alert("Por favor, insira um valor numérico para o progresso.");
                 return;
             }
-    
+
             if (progress < 0 || progress > 99.99) {
                 alert("O progresso deve estar entre 0 e 99.99.");
                 return;
             }
-    
+
             // Encontrar o índice do nível atual
             const levelIndex = levels.findIndex(l => l.valor === level);
             if (levelIndex === -1) {
                 alert("Nível inválido selecionado.");
                 return;
             }
-    
+
             // Pegar o próximo nível
             const nextLevel = levels[levelIndex + 1];
-    
+
             // Verificar se há um próximo nível
             if (!nextLevel) {
                 document.getElementById("result").innerHTML = "Não há próximo nível disponível.";
                 return;
             }
-    
+
             // Calcular o valor total necessário para o próximo nível
             const totalNeeded = nextLevel.valor - level;
-    
+
             // Calcular o valor já alcançado com base no progresso
             const amountAchieved = (progress / 100) * totalNeeded;
-    
+
             // Calcular o valor restante
             const remainingAmount = totalNeeded - amountAchieved;
-    
+
             // Dividir o valor restante por 3
             const dividedAmount = remainingAmount / 3;
-    
+
             // Exibir o resultado
-            const resultText = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).<br><br>Lembrando que apostas esportivas o progresso é 3 vezes mais rápido.`;
+            const resultText = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).\n\nLembrando que apostas esportivas o progresso é 3 vezes mais rápido.⚽🏀🏐`;
+
+            // Exibir o resultado na página (substituindo \n por <br>)
             document.getElementById("result").innerHTML = `
-                ${resultText}
+                ${resultText.replace(/\n/g, "<br>")} <!-- Substitui quebras de linha por <br> -->
                 <span class="copy-icon" title="Copiar resultado" aria-label="Copiar resultado">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
                     </svg>
                 </span>
             `;
-    
+
             // Adicionar evento de cópia ao ícone
             const copyIcon = document.querySelector(".copy-icon");
             copyIcon.addEventListener("click", function () {
-                navigator.clipboard.writeText(resultText).catch(function () {
+                // Texto copiado para a área de transferência (mantém \n)
+                const textToCopy = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).\n\nLembrando que apostas esportivas o progresso é 3 vezes mais rápido.⚽🏀🏐`;
+                navigator.clipboard.writeText(textToCopy).catch(function () {
                     console.error("Erro ao copiar o resultado.");
                 });
             });
         }
-    
+
         // Função para limpar o resultado
         function clearResult() {
             document.getElementById("result").innerHTML = "";
         }
-    
+
         // Adicionar evento de alteração ao campo de nível
         document.getElementById("level").addEventListener("change", clearResult);
-    
+
         // Adicionar evento de alteração ao campo de progresso
         document.getElementById("progress").addEventListener("input", clearResult);
-    
+
         // Adicionar evento de tecla ao campo de progresso
         document.getElementById("progress").addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
