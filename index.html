@@ -16,29 +16,29 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            flex-direction: column; /* Alinha os itens verticalmente */
-            position: relative; /* Permite posicionar o rodapé corretamente */
+            flex-direction: column;
+            position: relative;
         }
         .Logo {
-            position: absolute; /* Posiciona a logo de forma absoluta */
-            top: 150px; /* Distância do topo da página */
-            left: 50%; /* Centraliza horizontalmente */
-            transform: translateX(-50%); /* Ajusta a centralização */
-            width: 100px; /* Tamanho da logo */
-            height: auto; /* Mantém a proporção */
-            z-index: 1; /* Garante que a logo fique acima de outros elementos */
+            position: absolute;
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: auto;
+            z-index: 1;
         }
         .container {
-            margin-top: 150px; /* Ajuste para acomodar a logo */
-            width: 500px; /* Largura fixa do container */
+            margin-top: 150px;
+            width: 500px;
             padding: 20px;
             background-color: #122431;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border: 1px solid #192c38;
-            box-sizing: border-box; /* Garante que o padding não aumente a largura */
-            position: relative; /* Permite posicionar elementos internos */
-            z-index: 0; /* Garante que o container fique abaixo da logo */
+            box-sizing: border-box;
+            position: relative;
+            z-index: 0;
         }
         h1 {
             text-align: center;
@@ -63,7 +63,7 @@
             color: #ffffff;
             width: 100%;
             outline: none;
-            box-sizing: border-box; /* Garante que o padding não aumente a largura */
+            box-sizing: border-box;
         }
         input:focus, select:focus {
             border-color: #1475e1;
@@ -92,10 +92,14 @@
             margin-top: 20px;
             color: #ffffff;
             text-align: center;
+        }
+        .result-content {
+            margin-bottom: 10px;
+        }
+        .copy-container {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 10px;
+            margin-top: 10px;
         }
         .progress-container {
             display: flex;
@@ -110,38 +114,39 @@
             cursor: pointer;
             color: #1475e1;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         .copy-icon:hover {
             color: #105eb4;
         }
-        /* Estilos do rodapé */
         footer {
-            position: absolute; /* Posiciona o rodapé de forma absoluta */
-            bottom: 20px; /* Distância da parte inferior da página */
-            left: 50%; /* Centraliza horizontalmente */
-            transform: translateX(-50%); /* Ajusta a centralização */
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
             font-size: 14px;
             color: #ffffff;
             opacity: 0.8;
         }
 
-        /* Media Queries para telas menores (smartphones) */
         @media (max-width: 480px) {
             .Logo {
-                top: 150px; /* Ajuste da logo para telas menores */
-                width: 80px; /* Tamanho reduzido da logo */
+                top: 150px;
+                width: 80px;
             }
             .container {
-                width: 90%; /* Largura reduzida para telas menores */
-                margin-top: 120px; /* Ajuste do container para telas menores */
-                padding: 15px; /* Padding reduzido */
+                width: 90%;
+                margin-top: 120px;
+                padding: 15px;
             }
             h1 {
-                font-size: 20px; /* Tamanho da fonte reduzido */
+                font-size: 20px;
             }
             .result {
-                font-size: 16px; /* Tamanho da fonte reduzido */
+                font-size: 16px;
             }
         }
     </style>
@@ -216,7 +221,7 @@
             { nome: "Diamante III", valor: 600000000 },
             { nome: "Diamante IV", valor: 1500000000 },
             { nome: "Diamante V", valor: 3000000000 },
-            { nome: "Obsidian", valor: 6000000000 } // Mantido para cálculo, mas não aparece no <select>
+            { nome: "Obsidian", valor: 6000000000 }
         ];
 
         function calc() {
@@ -246,7 +251,9 @@
 
             // Verificar se há um próximo nível
             if (!nextLevel) {
-                document.getElementById("result").innerHTML = "Não há próximo nível disponível.";
+                document.getElementById("result").innerHTML = `
+                    <div class="result-content">Não há próximo nível disponível.</div>
+                `;
                 return;
             }
 
@@ -259,28 +266,34 @@
             // Calcular o valor restante
             const remainingAmount = totalNeeded - amountAchieved;
 
-            // Dividir o valor restante por 3
-            const dividedAmount = remainingAmount / 3;
-
             // Exibir o resultado
-            const resultText = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).\n\nLembrando que apostas esportivas o progresso é 3 vezes mais rápido.⚽🏀🏐`;
+            const resultText = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).<br><br>Lembrando que apostas esportivas o progresso VIP avança 3 vezes mais rápido.⚽🏀🏐😉`;
 
-            // Exibir o resultado na página (substituindo \n por <br>)
+            // Exibir o resultado na página
             document.getElementById("result").innerHTML = `
-                ${resultText.replace(/\n/g, "<br>")} <!-- Substitui quebras de linha por <br> -->
-                <span class="copy-icon" title="Copiar resultado" aria-label="Copiar resultado">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
-                    </svg>
-                </span>
+                <div class="result-content">${resultText}</div>
+                <div class="copy-container">
+                    <span class="copy-icon" id="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                        </svg>
+                    </span>
+                </div>
             `;
 
             // Adicionar evento de cópia ao ícone
-            const copyIcon = document.querySelector(".copy-icon");
+            const copyIcon = document.getElementById("copy-icon");
             copyIcon.addEventListener("click", function () {
-                // Texto copiado para a área de transferência (mantém \n)
-                const textToCopy = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).\n\nLembrando que apostas esportivas o progresso é 3 vezes mais rápido.⚽🏀🏐`;
-                navigator.clipboard.writeText(textToCopy).catch(function () {
+                // Texto copiado para a área de transferência
+                const textToCopy = `Será necessário aproximadamente R$ ${remainingAmount.toLocaleString('pt-BR')} em apostas no cassino para alcançar o próximo nível (${nextLevel.nome}).\n\nLembrando que apostas esportivas o progresso VIP avança 3 vezes mais rápido.⚽🏀🏐😉`;
+                navigator.clipboard.writeText(textToCopy).then(function () {
+                    // Mostrar mensagem "Copiado!" temporariamente
+                    const originalHTML = copyIcon.innerHTML;
+                    copyIcon.innerHTML = 'Copiado!';
+                    setTimeout(function() {
+                        copyIcon.innerHTML = originalHTML;
+                    }, 1000);
+                }).catch(function () {
                     console.error("Erro ao copiar o resultado.");
                 });
             });
@@ -300,7 +313,7 @@
         // Adicionar evento de tecla ao campo de progresso
         document.getElementById("progress").addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
-                calc(); // Chamar a função de cálculo ao pressionar Enter
+                calc();
             }
         });
     </script>
