@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de progresso VIP</title>
-    <style>
-        /* Estilos gerais */
+    <title>VIP Progress Calculator</title>
+    <style>        
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -20,17 +19,15 @@
             position: relative;
         }
         .Logo {
-            position: absolute;
-            top: 150px;
-            left: 50%;
-            transform: translateX(-50%);
             width: 100px;
             height: auto;
-            z-index: 1;
-        }
+            margin: 0 auto 50px; /* Centraliza e adiciona espaço abaixo */
+            display: block; /* Garante que a margem automática funcione */
+            }
+
         .container {
-            margin-top: 150px;
-            width: 500px;
+            width: 450px;
+            margin-top: -50px;
             padding: 20px;
             background-color: #122431;
             border-radius: 8px;
@@ -43,8 +40,9 @@
         h1 {
             text-align: center;
             color: #ffffff;
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-top: -100px;
+            margin-bottom: 100px;
+            font-size: 36px;
             font-weight: bold;
         }
         label {
@@ -145,14 +143,19 @@
             h1 {
                 font-size: 20px;
             }
-            .result {
+            .result {   
                 font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Logo -->
+
+    <h1>VIP Progress Calculator</h1>
+    
+    <!-- Container principal -->
+    <div class="container">
+        <!-- Logo -->
     <svg class="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 499.9">
         <defs><style>.cls-1{fill:#fff;}</style></defs>
         <g id="text">
@@ -167,35 +170,31 @@
             <path class="cls-1" d="M572.09,498.6v-72.03h16.63v26.03c4.1-5.18,9.72-7.45,15.44-7.45,12.96,0,23,10.26,23,27.32s-10.15,27.43-23,27.43c-5.83,0-11.12-2.38-15.44-7.34v6.05h-16.63ZM598.66,485.21c6.59,0,11.55-4.86,11.55-12.74s-4.97-12.63-11.55-12.63c-3.56,0-7.88,1.94-9.93,4.75v15.98c2.05,2.81,6.37,4.64,9.93,4.64Z"/>
             <path class="cls-1" d="M635.91,498.6v-52.16h16.63v6.37c3.46-4.21,10.04-7.78,16.31-7.78v15.98c-.97-.22-2.38-.43-4.1-.43-4.32,0-10.04,1.84-12.2,4.75v33.26h-16.63Z"/>
         </g>
-    </svg>
-
-    <!-- Container principal -->
-    <div class="container">
-        <h1>Calculadora de progresso VIP</h1>
-        <label for="level">Nível Atual:</label>
+    </svg>        
+        <label for="level">Current VIP Level:</label>
         <select id="level">
-            <option value="0">Não VIP</option>
+            <option value="0">Non-VIP</option>
             <option value="60000">Bronze</option>
-            <option value="300000">Prata</option>
-            <option value="600000">Ouro</option>
-            <option value="1500000">Platina I</option>
-            <option value="3000000">Platina II</option>
-            <option value="6000000">Platina III</option>
-            <option value="15000000">Platina IV</option>
-            <option value="30000000">Platina V</option>
-            <option value="60000000">Platina VI</option>
-            <option value="150000000">Diamante I</option>
-            <option value="300000000">Diamante II</option>
-            <option value="600000000">Diamante III</option>
-            <option value="1500000000">Diamante IV</option>
-            <option value="3000000000">Diamante V</option>
+            <option value="300000">Silver</option>
+            <option value="600000">Gold</option>
+            <option value="1500000">Platinum I</option>
+            <option value="3000000">Platinum II</option>
+            <option value="6000000">Platinum III</option>
+            <option value="15000000">Platinum IV</option>
+            <option value="30000000">Platinum V</option>
+            <option value="60000000">Platinum VI</option>
+            <option value="150000000">Diamond I</option>
+            <option value="300000000">Diamond II</option>
+            <option value="600000000">Diamond III</option>
+            <option value="1500000000">Diamond IV</option>
+            <option value="3000000000">Diamond V</option>
         </select>
-        <label for="progress">Progresso:</label>
+        <label for="progress">Progress:</label>
         <div class="progress-container">
             <input type="number" id="progress" placeholder="0.00" min="0" max="99.99" step="0.01" autocomplete="off">
             <span>%</span>
         </div>
-        <button onclick="calc()">Calcular</button>
+        <button onclick="calc()">Calc</button>
         <div class="result" id="result"></div>
     </div>
 
@@ -230,19 +229,19 @@
 
             // Validar entrada de progresso
             if (isNaN(progress)) {
-                alert("Por favor, insira um valor numérico para o progresso.");
+                alert("Please enter a numeric value for progress");
                 return;
             }
 
             if (progress < 0 || progress > 99.99) {
-                alert("O progresso deve estar entre 0 e 99.99.");
+                alert("The progress must be between 0 and 99.99");
                 return;
             }
 
             // Encontrar o índice do nível atual
             const levelIndex = levels.findIndex(l => l.valor === level);
             if (levelIndex === -1) {
-                alert("Nível inválido selecionado.");
+                alert("Invalid level selected");
                 return;
             }
 
@@ -252,7 +251,7 @@
             // Verificar se há um próximo nível
             if (!nextLevel) {
                 document.getElementById("result").innerHTML = `
-                    <div class="result-content">Não há próximo nível disponível.</div>
+                    <div class="result-content">No next level available</div>
                 `;
                 return;
             }
@@ -289,7 +288,7 @@
                 navigator.clipboard.writeText(textToCopy).then(function () {
                     // Mostrar mensagem "Copiado!" temporariamente
                     const originalHTML = copyIcon.innerHTML;
-                    copyIcon.innerHTML = 'Copiado!';
+                    copyIcon.innerHTML = 'Copied!';
                     setTimeout(function() {
                         copyIcon.innerHTML = originalHTML;
                     }, 1000);
